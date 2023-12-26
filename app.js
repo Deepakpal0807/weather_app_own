@@ -15,7 +15,9 @@ search.addEventListener('click', () => {
 //  weather api
     fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${APIKey}`)
         .then(response => response.json())
+        
         .then(json => {
+            
 
             if (json.cod === '404') {
 
@@ -28,11 +30,13 @@ search.addEventListener('click', () => {
                 error404.classList.add('fadeIn');
 
                 return;
+                console.log(json);
 
             }
 
             error404.style.display = 'none';
             error404.classList.remove('fadeIn');
+            // console.log(json);
 
             const image = document.querySelector('.weather-box img');
             const temperature = document.querySelector('.weather-box .temperature');
@@ -40,30 +44,35 @@ search.addEventListener('click', () => {
             const humidity = document.querySelector('.weather-details .humidity span');
             const wind = document.querySelector('.weather-details .wind span');
 
+            // console.log(json.weather[0].main);
             switch (json.weather[0].main) {
                 case 'Clear':
-                    image.src = 'clear.png';
+                    image.src = "clear.png";
                     break;
 
                 case 'Rain':
-                    image.src = 'rain.png';
+                    image.src = "rain.png";
                     break;
 
                 case 'Snow':
-                    image.src = 'snow.png';
+                    image.src = "snow.png";
                     break;
 
                 case 'Clouds':
-                    image.src = 'clouds.png';
+                    image.src = "clouds.png";
                     break;
 
                 case 'Haze':
-                    image.src = 'mist.png';
+                    image.src = "mist.png";
                     break;
+               case 'Fog': 
+                 image.src="fog.png";
+                 break;
 
                 default:
                     image.src = '';
             }
+            // console.log(image.src);
 
             temperature.innerHTML = `${parseInt(json.main.temp)}<span>°C</span>`;
             description.innerHTML = `${json.weather[0].description}`;
